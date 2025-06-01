@@ -1,6 +1,6 @@
-IF OBJECT_ID ('bronze.crm_cuts_info', 'U') IS NOT NULL
-	DROP TABLE bronze.crm_cuts_info;
-CREATE TABLE bronze.crm_cuts_info (
+IF OBJECT_ID ('bronze.crm_cust_info', 'U') IS NOT NULL
+	DROP TABLE bronze.crm_cust_info;
+CREATE TABLE bronze.crm_cust_info (
 	cst_id INT,
 	cst_key NVARCHAR(50),
 	cst_firstname NVARCHAR(50),
