@@ -19,8 +19,9 @@ start and end time diff used to track load times of each table.
 
 CREATE OR ALTER PROCEDURE bronze.load_bronze AS
 BEGIN
-	DECLARE @start_time DATETIME, @end_time DATETIME;
+	DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @batch_end_time DATETIME;
 	BEGIN TRY
+		SET @batch_start_time = GETDATE();
 		PRINT '======================================================================';
 		PRINT 'Loading Bronze Layer';
 		PRINT '======================================================================';
@@ -133,10 +134,14 @@ BEGIN
 		PRINT '>> Load Duration: ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
 		PRINT '>>------------------------------------------';
 
-
+	SET @batch_end_time = GETDATE();
+	PRINT '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+	PRINT 'Batch Load time: ' + CAST(DATEDIFF(second, @batch_start_time, @batch_end_time) AS NVARCHAR) + ' seconds';
+	PRINT '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
 
 
 	END TRY
+	
 	BEGIN CATCH
 		PRINT '======================================================================';
 		PRINT 'ERROR OCCURED DURING LOADING BRONZE LAYER';
@@ -145,5 +150,4 @@ BEGIN
 		PRINT '======================================================================'; 
 	END CATCH
 END
-
 
